@@ -1,0 +1,25 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "connect-ensure-login": "*",
+    "express": "3.2.5",
+    "ejs": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "password-hash": "*"
+  },
+  "devDependencies": {
+    "cheerio": "*",
+    "database-cleaner": "*",
+    "factory-lady": "*",
+    "mocha": "*",
+    "request": "*",
+    "should": "*"
+  }
+}
