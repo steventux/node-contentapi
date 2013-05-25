@@ -3,7 +3,7 @@ var helper          = require('../test-helper'),
     Factory         = helper.Factory,
     request         = helper.request;
 
-describe('A CMS page', function() {
+describe('GET content by path', function() {
 
   before(function(done){
     Factory.create('content',{ path:"foo",title:"Foo!",body:"### Some foo content" },function(){ done(); });
