@@ -1,11 +1,9 @@
-
 /**
  * Module dependencies.
  */
-
-var express = require('express')
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn 
+  , express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , mongoose = require('mongoose')
   , passport  = require('passport')
@@ -14,7 +12,7 @@ var express = require('express')
 /**
  * Mongoose config 
  */
-mongoose.set('debug', true); // TODO: Should be ENV dependent.
+mongoose.set('debug', process.env.NODE_ENV === 'development');
 mongoose.connect(process.env.MONGOHQ_URL);
 
 var db = mongoose.connection;
@@ -27,16 +25,12 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
+app.use(express.cookieParser('n0d3-c0nt3nt4p1'));
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -44,23 +38,18 @@ if ('development' == app.get('env')) {
 }
 
 /**
- * Libs and helpers.
+ * Libraries
  */
 require('./lib/passport');
 
 app.get('/', routes.index);
-// Auth routes
-app.get('/login', routes.login);
-app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
-// Admin content routes
-app.get('/admin/contents',          ensureLoggedIn(), adminContentRoutes.index);
-app.get('/admin/contents/new',      ensureLoggedIn(), adminContentRoutes._new);
-app.post('/admin/contents',         ensureLoggedIn(), adminContentRoutes.create);
-app.get('/admin/contents/:id/edit', ensureLoggedIn(), adminContentRoutes.edit);
-
-// Give other specific routes priority by placing them before this one
 app.get('/:path', routes.contentByPath);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+// Export the app for tests/console debugging.
+module.exports = app;
+
+if (!module.parent) {
+  http.createServer(app).listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+  });
+}

@@ -3,13 +3,10 @@ var mongoose = require('mongoose')
 var User = function() {
 
   var userSchema = mongoose.Schema({
-    username: String,
-    password: String
+    apiKey : String,
+    secret : String
   }, { collection: 'users' } );
 
-  userSchema.methods.validPassword = function(password) {
-    return passwordHash.verify(password, this.password);
-  }
   return mongoose.model('User', userSchema);
 
 }();

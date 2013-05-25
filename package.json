@@ -8,14 +8,10 @@
   "dependencies": {
     "connect-ensure-login": "*",
     "express": "3.2.5",
-    "ejs": "*",
     "mongoose": "*",
-    "passport": "*",
-    "passport-local": "*",
-    "password-hash": "*"
+    "passport": "*"
   },
   "devDependencies": {
-    "cheerio": "*",
     "database-cleaner": "*",
     "factory-lady": "*",
     "mocha": "*",

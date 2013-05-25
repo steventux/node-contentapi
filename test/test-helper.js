@@ -8,7 +8,6 @@ var  app = require('../app')
   ,  Factory = require('factory-lady')
   ,  http    = require('http')
   ,  mongoose = require('mongoose')
-  ,  passwordHash    = require('password-hash')
   ,  request = require('request')
   ,  User = require('../models/user');
 
@@ -19,8 +18,8 @@ Factory.define('content', Content, {
   body     : '### Some test content'
 });
 Factory.define('user', User, {
-  username : "admin", 
-  password : passwordHash.generate('blank')
+  apiKey : "a1b2c3d4e5", 
+  secret : "z0y9x8w7v6"
 });
 
 /* Setup */
@@ -28,6 +27,9 @@ before(function(done) {
   this.server = http.createServer(app).listen(process.env.PORT);
   this.databaseCleaner = new DatabaseCleaner('mongodb');
   done();
+});
+afterEach(function(done){
+  this.databaseCleaner.clean(mongoose.connections[0].db,done);
 });
 /* Teardown */
 after(function(done) {
