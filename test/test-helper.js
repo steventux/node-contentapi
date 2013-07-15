@@ -4,12 +4,12 @@ process.env.PORT = 3001
 process.env.MONGOHQ_URL = "mongodb://localhost:27017/node_contentapi_test"
 
 var  app = require('../app')
-  ,  Content = require('../models/content')
+  ,  Content = require('../app/models/content')
   ,  Factory = require('factory-lady')
   ,  http    = require('http')
   ,  mongoose = require('mongoose')
   ,  request = require('request')
-  ,  User = require('../models/user');
+  ,  User = require('../app/models/user');
 
 /* Factories */
 Factory.define('content', Content, {

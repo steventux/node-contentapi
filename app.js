@@ -3,7 +3,7 @@
  */
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn 
   , express = require('express')
-  , routes = require('./routes')
+  , routes = require('./app/routes')
   , http = require('http')
   , mongoose = require('mongoose')
   , passport  = require('passport')
